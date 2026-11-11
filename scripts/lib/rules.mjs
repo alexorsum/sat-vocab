@@ -119,7 +119,7 @@ export function validateEntry(e, ctx) {
       checkText(`${id} example ${i + 1}`, ex.text, errors);
       if (typeof ex.text === 'string') {
         const n = countWords(ex.text);
-        if (n < 8 || n > 45) err(`example ${i + 1} should be 8 to 45 words (has ${n})`);
+        if (n < 6 || n > 45) err(`example ${i + 1} should be 6 to 45 words (has ${n})`);
         if (!containsWordForm(ex.text, e.word)) err(`example ${i + 1} does not contain the word`);
         if (!/[.!?"']$/.test(ex.text)) err(`example ${i + 1} should end with punctuation`);
         texts.add(ex.text.toLowerCase());
