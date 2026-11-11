@@ -27,10 +27,16 @@ export default function Layout() {
 
   // On every page change, scroll to the top and move focus to the page so
   // screen reader and keyboard users start in the right place.
+  // On first load, focus stays at the top so the skip link is the first Tab stop.
+  const firstRender = useRef(true);
   useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
     window.scrollTo(0, 0);
     mainRef.current?.focus({ preventScroll: true });
-  }, [location.pathname]);
+  }, [location.key]);
 
   return (
     <div className="app">
@@ -68,7 +74,8 @@ export default function Layout() {
         </ul>
       </nav>
       <main id="main" ref={mainRef} tabIndex={-1}>
-        <Outlet />
+        {/* A new key on every navigation gives each visit a fresh page, so tapping a menu item restarts that activity. */}
+        <Outlet key={location.key} />
       </main>
       <nav className="tabbar" aria-label="Quick links">
         <ul>

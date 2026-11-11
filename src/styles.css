@@ -380,7 +380,7 @@ h1[tabindex='-1']:focus-visible {
   color: var(--accent);
 }
 .btn.small {
-  min-height: 38px;
+  min-height: 44px;
   padding: 6px 12px;
   font-size: 0.9rem;
 }

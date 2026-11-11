@@ -17,7 +17,7 @@ const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
 export default function Choices({ choices, selected, reveal = null, onSelect, eliminated, onEliminate, label }: Props) {
   const revealed = reveal !== null;
   return (
-    <ul className="choices" role="radiogroup" aria-label={label}>
+    <div className="choices" role="radiogroup" aria-label={label}>
       {choices.map((c, i) => {
         const classes = ['choice'];
         if (selected === i) classes.push('selected');
@@ -25,7 +25,7 @@ export default function Choices({ choices, selected, reveal = null, onSelect, el
         if (revealed && selected === i && i !== reveal) classes.push('wrong');
         if (eliminated?.has(i) && !revealed) classes.push('eliminated');
         return (
-          <li key={`${i}-${c}`} className="choice-row">
+          <div key={`${i}-${c}`} className="choice-row">
             <button
               type="button"
               role="radio"
@@ -65,9 +65,9 @@ export default function Choices({ choices, selected, reveal = null, onSelect, el
                 <s aria-hidden="true">{LETTERS[i]}</s>
               </button>
             )}
-          </li>
+          </div>
         );
       })}
-    </ul>
+    </div>
   );
 }

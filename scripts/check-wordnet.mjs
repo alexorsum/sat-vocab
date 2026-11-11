@@ -116,4 +116,5 @@ function main() {
   if (strict && missing.length) process.exit(1);
 }
 
-main();
+// Run only when called directly, so other scripts can import senses().
+if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href) main();
