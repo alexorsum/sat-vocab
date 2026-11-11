@@ -26,9 +26,13 @@ export function loadContext() {
   const pool = new Set(readJson('data/sat-pool.json'));
   if (existsSync(join(ROOT, 'data/extra-allowed.json'))) for (const w of readJson('data/extra-allowed.json')) pool.add(w);
   for (const w of list.words) pool.add(w.word);
+  // Synonyms and antonyms may also come from the academic frequency band:
+  // WordNet words that are neither everyday words nor very rare ones.
+  const synPool = new Set(pool);
+  for (const w of readJson('data/academic-band.json')) synPool.add(w);
   return {
     roots,
     list,
-    ctx: { rootIds: new Set(roots.map((r) => r.id)), pool, listWords: new Set(list.words.map((w) => w.word)) },
+    ctx: { rootIds: new Set(roots.map((r) => r.id)), pool, synPool, listWords: new Set(list.words.map((w) => w.word)) },
   };
 }

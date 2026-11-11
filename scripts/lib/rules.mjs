@@ -83,7 +83,8 @@ function checkText(label, text, errors) {
 
 /**
  * Validate one word entry. Returns a list of error strings (empty when valid).
- * ctx: { rootIds:Set, pool:Set, listWords:Set }
+ * ctx: { rootIds:Set, pool:Set (SAT list words, used for distractors),
+ *        synPool:Set (pool plus academic-band words, used for synonyms), listWords:Set }
  */
 export function validateEntry(e, ctx) {
   const errors = [];
@@ -138,7 +139,7 @@ export function validateEntry(e, ctx) {
     for (const w of list) {
       if (typeof w !== 'string' || !/^[a-z]+$/.test(w)) err(`${label} "${w}" must be one lowercase word`);
       else if (w === e.word) err(`${label} repeats the word itself`);
-      else if (!ctx.pool.has(w)) err(`${label} "${w}" is not in the SAT word pool`);
+      else if (!(ctx.synPool ?? ctx.pool).has(w)) err(`${label} "${w}" is not an SAT-list or academic-band word`);
       if (seen.has(w)) err(`${label} "${w}" is repeated`);
       seen.add(w);
     }
