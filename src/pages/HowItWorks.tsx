@@ -103,8 +103,9 @@ export default function HowItWorks() {
       <h2>5. Mixing things up</h2>
       <p>
         Practice that mixes different words and question types feels harder than doing one kind at a time, and it produces better
-        long-term learning. Quizzes here are mixed by default. The app also avoids teaching look-alike words side by side at first,
-        because learning similar new words together makes them blur. It contrasts them later, once you know each one. <Cite n={[13, 14]} />
+        long-term learning. Quizzes here are mixed by default. The app also keeps look-alike words and near-synonyms out of the same
+        learning batch, because learning similar new words together makes them blur. Once you know both words of a confusing pair,
+        quizzes put them side by side as answer choices. <Cite n={[13, 14]} />
       </p>
 
       <h2>6. Making it yourself</h2>

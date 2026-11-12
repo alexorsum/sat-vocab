@@ -232,7 +232,7 @@ of reviews and a training loop; defaults already beat SM-2) and interval "fuzz"
 | R3 | Teach each word with a short, plain definition plus three contexts from different settings, and rotate contexts in later reviews. | 2.3 |
 | R4 | Practice the real task: short passage, blank, four precise choices, the official stem, realistic timing. | 1, 2.7 |
 | R5 | Show word parts and word families, and let the learner practice inferring meaning from parts. | 2.4 |
-| R6 | Mix words from different sets and mix question types by default. Never introduce near-synonyms or look-alikes together; contrast them later, once each is known. | 2.5 |
+| R6 | Mix words from different sets and mix question types by default. Never introduce near-synonyms or look-alikes in the same batch; contrast them in quizzes later, once each is known. | 2.5 |
 | R7 | Make the learner produce: type the word, write an original sentence. Ask for the sentence only after the meaning has been studied and checked. | 2.6 |
 | R8 | Explain every answer, including why each wrong choice fails. Log every error with a reason type and bring missed words back. | 2.7 |
 | R9 | Mnemonics are optional and personal, and never replace retrieval. | 2.8 |

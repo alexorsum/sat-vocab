@@ -224,3 +224,49 @@ describe('roots quiz and game', () => {
     expect(matches).toBeLessThan(250);
   });
 });
+
+import { pickBatch, tooSimilar } from '../../src/lib/learn';
+
+describe('learning batches', () => {
+  it('never put near-synonyms or confusing pairs in the same batch', () => {
+    let rest = words.slice();
+    let batches = 0;
+    while (rest.length > 0) {
+      const batch = pickBatch(rest, 10);
+      expect(batch.length).toBeGreaterThan(0);
+      for (let i = 0; i < batch.length; i++) {
+        for (let j = i + 1; j < batch.length; j++) expect(tooSimilar(batch[i], batch[j]), `${batch[i].word} / ${batch[j].word}`).toBe(false);
+      }
+      const taken = new Set(batch.map((w) => w.id));
+      rest = rest.filter((w) => !taken.has(w.id));
+      batches += 1;
+    }
+    // Every word is still taught, in about the same number of batches.
+    expect(batches).toBeLessThanOrEqual(Math.ceil(words.length / 10) + 3);
+  });
+
+  it('keeps ranked order and defers only the similar word', () => {
+    const abate = wordMap.get('abate') as Word;
+    const abet = wordMap.get('abet') as Word;
+    const other = words.find((w) => !tooSimilar(w, abate) && !tooSimilar(w, abet) && w.id !== 'abate' && w.id !== 'abet') as Word;
+    expect(tooSimilar(abate, abet)).toBe(true);
+    expect(pickBatch([abate, abet, other], 2).map((w) => w.id)).toEqual(['abate', other.id]);
+    expect(pickBatch([abate, abet], 5).map((w) => w.id)).toEqual(['abate']);
+    expect(pickBatch(words, 10).map((w) => w.id)[0]).toBe(words[0].id);
+  });
+});
+
+describe('contrasting confusing pairs', () => {
+  it('uses a known look-alike as a wrong choice in meaning-to-word questions', () => {
+    const abate = wordMap.get('abate') as Word;
+    const abet = wordMap.get('abet') as Word;
+    const item = makeWordItem(abate, words, mulberry32(21), [abate, abet]);
+    expect(item.choices).toContain('abet');
+    expect(item.choices[item.answer]).toBe('abate');
+    expect(new Set(item.choices).size).toBe(4);
+    expect(reasonForChoice(item, item.choices.indexOf('abet'), wordMap)).toBe('confused-word');
+    // Not used when the look-alike has not been learned.
+    const plain = makeWordItem(abate, words, mulberry32(21), [abate]);
+    expect(plain.choices[plain.answer]).toBe('abate');
+  });
+});

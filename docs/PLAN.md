@@ -69,3 +69,18 @@ validated list of 1,000+ words.
 5. App core (storage, scheduler, shell), then features one by one
 6. Unit tests alongside each pure module, then Playwright tests
 7. CI and deploy workflows, README, final checks
+
+## Status
+
+All five phases are complete.
+
+- Research: docs/RESEARCH.md (test format, learning science, FSRS-6 chosen
+  over SM-2, design rules R1 to R12, unreachable sites).
+- Word list: 1,063 validated entries and 135 roots and affixes
+  (docs/WORDLIST.md has the sources, checks, and known limits).
+- App: all ten features, offline PWA, JSON backup.
+- Tests: 79 unit tests and 44 end-to-end tests run at phone and laptop sizes,
+  including offline use and accessibility checks in light and dark mode.
+- Delivery: CI and Pages deploy workflows, README.
+
+Left for the repository owner: turn on GitHub Pages (README, "Deploying").

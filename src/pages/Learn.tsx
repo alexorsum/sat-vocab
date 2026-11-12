@@ -8,6 +8,7 @@ import type { Word } from '../types';
 import { WordDetail } from '../components/WordBits';
 import Choices from '../components/Choices';
 import { makeDefItem } from '../lib/quiz';
+import { pickBatch } from '../lib/learn';
 
 export default function Learn() {
   useTitle('Learn New Words');
@@ -38,7 +39,7 @@ export default function Learn() {
   }, [word, step, user.settings.audio]);
 
   const start = (size: number) => {
-    setBatch(unseen.slice(0, size));
+    setBatch(pickBatch(unseen, size));
     setIndex(0);
     setStep('study');
     setSentence('');

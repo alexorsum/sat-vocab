@@ -95,8 +95,17 @@ export function makeDefItem(target: Word, all: readonly Word[], rng: Rng): Choic
   };
 }
 
-export function makeWordItem(target: Word, all: readonly Word[], rng: Rng): ChoiceItem {
-  const others = pickDistractorWords(target, all, rng);
+/**
+ * Meaning to word. If the target has a look-alike that the student is also
+ * studying (it is in `pool`), that word is used as one of the wrong choices,
+ * so confusing pairs get contrasted once both are known.
+ */
+export function makeWordItem(target: Word, all: readonly Word[], rng: Rng, pool: readonly Word[] = []): ChoiceItem {
+  const lookalikes = pool.filter((w) => w.id !== target.id && !related(target, w) && target.confused.some((c) => c.word === w.word));
+  const others = lookalikes.slice(0, 1);
+  for (const w of pickDistractorWords(target, all, rng)) {
+    if (others.length < 3 && !others.some((o) => o.id === w.id)) others.push(w);
+  }
   const { choices, answer } = placeAnswer(target.word, others.map((o) => o.word), rng);
   return {
     kind: 'mc-word',
@@ -201,7 +210,7 @@ export function makeItem(kind: QuizKind, target: Word, all: readonly Word[], poo
   let item: QuizItem | null = null;
   if (kind === 'typed') item = makeTypedItem(target);
   else if (kind === 'mc-def') item = makeDefItem(target, all, rng);
-  else if (kind === 'mc-word') item = makeWordItem(target, all, rng);
+  else if (kind === 'mc-word') item = makeWordItem(target, all, rng, pool);
   else if (kind === 'synonym' || kind === 'antonym') item = makeRelationItem(target, all, kind, rng);
   else if (kind === 'tone') item = makeToneItem(target);
   else if (kind === 'match') {
