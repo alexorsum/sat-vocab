@@ -5,7 +5,7 @@ test.describe('Progress Dashboard', () => {
   test('starts empty and honest', async ({ page }) => {
     await open(page, 'progress');
     await expect(page.getByTestId('stat-seen')).toHaveText('0');
-    await expect(page.getByTestId('stat-retention')).toHaveText('–');
+    await expect(page.getByTestId('stat-retention')).toHaveText('n/a');
     await expect(page.getByTestId('stat-unseen')).toHaveText(String(WORDS.length));
     await expect(page.getByText('Nothing is scheduled yet.')).toBeVisible();
   });

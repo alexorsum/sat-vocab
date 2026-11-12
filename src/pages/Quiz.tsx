@@ -380,12 +380,26 @@ function TypedView({ item, word, onDone }: { item: TypedItem; word: Word; onDone
 
 function MatchView({ item, onDone }: { item: MatchItem; onDone: (o: Outcome) => void }) {
   const [picked, setPicked] = useState<string | null>(null);
+  const [pickedRight, setPickedRight] = useState<string | null>(null);
   const [matched, setMatched] = useState<Set<string>>(new Set());
   const [wrong, setWrong] = useState(0);
   const [missIds, setMissIds] = useState<Set<string>>(new Set());
   const [flash, setFlash] = useState<string | null>(null);
 
+  // Either side can be picked first; a pair is checked once both sides are chosen.
+  const choose = (side: 'left' | 'right', id: string) => {
+    const left = side === 'left' ? (picked === id ? null : id) : picked;
+    const right = side === 'right' ? (pickedRight === id ? null : id) : pickedRight;
+    if (left && right) {
+      tryPair(left, right);
+    } else {
+      setPicked(left);
+      setPickedRight(right);
+    }
+  };
+
   const tryPair = (leftId: string, rightId: string) => {
+    setPickedRight(null);
     if (leftId === rightId) {
       const next = new Set(matched).add(leftId);
       setMatched(next);
@@ -409,8 +423,8 @@ function MatchView({ item, onDone }: { item: MatchItem; onDone: (o: Outcome) => 
   return (
     <>
       <p className="muted">
-        Match each word with its {item.relation === 'synonym' ? 'synonym (closest meaning)' : 'antonym (opposite)'}. Pick a word on the left, then its partner
-        on the right.
+        Match each word with its {item.relation === 'synonym' ? 'synonym (closest meaning)' : 'antonym (opposite)'}. Pick a word, then its partner in the
+        other column.
       </p>
       <div className="match-board" data-relation={item.relation}>
         <div className="stack" role="group" aria-label="Words">
@@ -421,7 +435,7 @@ function MatchView({ item, onDone }: { item: MatchItem; onDone: (o: Outcome) => 
               className={`btn ${matched.has(l.wordId) ? 'done' : picked === l.wordId ? 'picked' : ''}`}
               disabled={matched.has(l.wordId)}
               aria-pressed={picked === l.wordId}
-              onClick={() => setPicked(picked === l.wordId ? null : l.wordId)}
+              onClick={() => choose('left', l.wordId)}
               data-left={l.wordId}
             >
               {l.text}
@@ -433,9 +447,10 @@ function MatchView({ item, onDone }: { item: MatchItem; onDone: (o: Outcome) => 
             <button
               key={r.wordId}
               type="button"
-              className={`btn ${matched.has(r.wordId) ? 'done' : flash === r.wordId ? 'miss' : ''}`}
-              disabled={matched.has(r.wordId) || picked === null}
-              onClick={() => picked && tryPair(picked, r.wordId)}
+              className={`btn ${matched.has(r.wordId) ? 'done' : flash === r.wordId ? 'miss' : pickedRight === r.wordId ? 'picked' : ''}`}
+              disabled={matched.has(r.wordId)}
+              aria-pressed={pickedRight === r.wordId}
+              onClick={() => choose('right', r.wordId)}
               data-right={r.wordId}
             >
               {r.text}

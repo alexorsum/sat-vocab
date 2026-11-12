@@ -148,7 +148,7 @@ describe('the validator catches broken entries', () => {
 
   it('dashes, bad examples, unknown roots, and self-references', () => {
     const a = sample();
-    a.examples[0].text = a.examples[0].text.replace(' ', ' — ');
+    a.examples[0].text = a.examples[0].text.replace(' ', ' \u2014 ');
     expect(errorsFor(a).join('\n')).toMatch(/en dash or em dash/);
 
     const b = sample();

@@ -80,7 +80,7 @@ export default function Progress() {
         <Stat value={counts.seen} label={`words seen of ${data.words.length}`} testId="stat-seen" />
         <Stat value={counts.learning} label="still learning" testId="stat-learning" />
         <Stat value={counts.mastered} label="mastered (memory lasts 3+ weeks)" testId="stat-mastered" />
-        <Stat value={retention ? `${Math.round(retention.rate * 100)}%` : '–'} label={retention ? `retention, last 30 days (${retention.count} reviews)` : 'retention (shows after your first spaced reviews)'} testId="stat-retention" />
+        <Stat value={retention ? `${Math.round(retention.rate * 100)}%` : 'n/a'} label={retention ? `retention, last 30 days (${retention.count} reviews)` : 'retention (shows after your first spaced reviews)'} testId="stat-retention" />
         <Stat value={streak.current} label={`day streak (longest: ${streak.longest})`} testId="stat-streak" />
         <Stat value={counts.unseen} label="words not started" testId="stat-unseen" />
       </div>
@@ -92,7 +92,7 @@ export default function Progress() {
         <h2 id="heat-title" className="chart-title">
           Study calendar
         </h2>
-        <p className="muted small">Each square is one day over the last {WEEKS} weeks. Darker means more study.</p>
+        <p className="muted small">Each square is one day over the last {WEEKS} weeks. A stronger color means more study.</p>
         <div className="heatmap-wrap">
           <div className="heatmap" role="group" aria-label="Study activity by day" data-testid="heatmap">
             {cells.map((c) => {

@@ -330,7 +330,12 @@ h1[tabindex='-1']:focus-visible {
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 .grid.three {
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 560px) {
+  .grid.three {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 .row {
   display: flex;

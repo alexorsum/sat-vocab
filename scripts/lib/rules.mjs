@@ -69,7 +69,7 @@ function escapeRe(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-const BAD_CHARS = /[–—―]/; // en dash, em dash, horizontal bar
+const BAD_CHARS = /[\u2013\u2014\u2015]/; // en dash, em dash, horizontal bar
 
 function checkText(label, text, errors) {
   if (typeof text !== 'string' || !text.trim()) {
