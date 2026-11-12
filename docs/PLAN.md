@@ -83,4 +83,4 @@ All five phases are complete.
   including offline use and accessibility checks in light and dark mode.
 - Delivery: CI and Pages deploy workflows, README.
 
-Left for the repository owner: turn on GitHub Pages (README, "Deploying").
+GitHub Pages is on and the app is deployed at https://alexorsum.github.io/sat-vocab/.

@@ -7,9 +7,6 @@ phone or laptop, works offline, and needs no account.
 
 **Live app:** https://alexorsum.github.io/sat-vocab/
 
-(The link works once GitHub Pages is turned on for this repository. See
-[Deploying](#deploying).)
-
 ## What is in it
 
 | Feature | What it does |
@@ -128,12 +125,9 @@ Two GitHub Actions workflows are included:
   publishes it. It runs on every push to the default branch and can also be
   started by hand from the Actions tab.
 
-One-time setup, done by the repository owner:
-
-1. Open the repository on GitHub and go to **Settings**, then **Pages**.
-2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-3. Go to the **Actions** tab, choose **Deploy to GitHub Pages**, and click
-   **Run workflow**.
+GitHub Pages is turned on for this repository with **Source** set to
+**GitHub Actions** (Settings, then Pages). If you copy the project to a new
+repository, set that once, then run the deploy workflow from the Actions tab.
 
 The app is built for the path `/sat-vocab/` (set as `base` in `vite.config.ts`).
 If the repository is renamed, change that path to match.
